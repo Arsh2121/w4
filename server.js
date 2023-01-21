@@ -1,13 +1,14 @@
-/*********************************************************************************
+/***************************
 *  WEB422 – Assignment 1
 *  I declare that this assignment is my own work in accordance with Seneca  Academic Policy.  
 *  No part of this assignment has been copied manually or electronically from any other source
 *  (including web sites) or distributed to other students.
 * 
 *  Name: Dhivi Narhari
-
+   ID: 156429219
+   Date: 1/20/2023
 *
-********************************************************************************/
+****************************/
 
 const express = require("express");
 
@@ -96,7 +97,3 @@ db.initialize(process.env.MONGODB_CONN_STRING)
     });
   }).catch((err) => { console.log(err);
   });
-
-
-
-  
