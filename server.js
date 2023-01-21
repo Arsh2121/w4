@@ -5,7 +5,6 @@
 *  (including web sites) or distributed to other students.
 * 
 *  Name: Dhivi Narhari
-  ID: 156429
 
 *
 ****************************/
@@ -15,7 +14,7 @@ const express = require("express");
 const cors = require("cors");
 
 const app = express();
-const HTTP_PORT = process.env.PORT || 8080;
+
 const MoviesDB = require("./modules/moviesDB.js");
 const db = new MoviesDB();
 
@@ -25,7 +24,7 @@ app.use(cors());
 
 app.use(express.json());
 
-
+const HTTP_PORT = process.env.PORT || 8080;
 
 
 app.get("/", function (req, res) {
