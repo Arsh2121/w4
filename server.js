@@ -26,13 +26,6 @@ app.use(express.json());
 
 const HTTP_PORT = process.env.PORT || 8080;
 
-
-app.get("/", function (req, res) {
-  res.json({ message: "API Listening" });
-});
-
-
-
 db.initialize(process.env.MONGODB_CONN_STRING)
   .then(() => {
     app.listen(HTTP_PORT, () => {
@@ -40,6 +33,15 @@ db.initialize(process.env.MONGODB_CONN_STRING)
     });
   }).catch((err) => { console.log(err);
   });
+
+  
+app.get("/", function (req, res) {
+  res.json({ message: "API Listening" });
+});
+
+
+
+
 
 app.post('/api/movies', (req, res) => {
     const body = req.body;
