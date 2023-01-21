@@ -25,6 +25,8 @@ app.use(cors());
 app.use(express.json());
 
 const HTTP_PORT = process.env.PORT || 8080;
+app.listen(process.env.PORT||3000)
+
 
 db.initialize(process.env.MONGODB_CONN_STRING)
   .then(() => {
@@ -34,7 +36,7 @@ db.initialize(process.env.MONGODB_CONN_STRING)
   }).catch((err) => { console.log(err);
   });
 
-  
+
 app.get("/", function (req, res) {
   res.json({ message: "API Listening" });
 });
