@@ -4,10 +4,10 @@
 *  No part of this assignment has been copied manually or electronically from any other source
 *  (including web sites) or distributed to other students.
 * 
-*  Name: Dhivi Narhari
+*  Name: Dhivi Narahari
    ID: 156429219
    Date: 1/20/2023
-*
+*  cyclic:
 ****************************/
 
 const express = require("express");
@@ -32,6 +32,14 @@ app.get("/", function (req, res) {
 });
 
 
+
+db.initialize(process.env.MONGODB_CONN_STRING)
+  .then(() => {
+    app.listen(HTTP_PORT, () => {
+      console.log(`server listening on: ${HTTP_PORT}`);
+    });
+  }).catch((err) => { console.log(err);
+  });
 
 app.post('/api/movies', (req, res) => {
     const body = req.body;
@@ -88,11 +96,3 @@ app.delete("/api/movies/:id", (req, res)=> {
 });
 
 
-
-db.initialize(process.env.MONGODB_CONN_STRING)
-  .then(() => {
-    app.listen(HTTP_PORT, () => {
-      console.log(`server listening on: ${HTTP_PORT}`);
-    });
-  }).catch((err) => { console.log(err);
-  });
