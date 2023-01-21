@@ -4,77 +4,99 @@
 *  No part of this assignment has been copied manually or electronically from any other source
 *  (including web sites) or distributed to other students.
 * 
-*  Name: Arshdeep Arshdeep 
-    Student ID: 142292218        
-     Date: 13/01/2022
-*
-*  Cyclic Link: _______________________________________________________________
+*  Name: Dhivi Narhari
+
 *
 ********************************************************************************/
 
 const express = require("express");
-const app = express();
+
 const cors = require("cors");
-require("dotenv").config();
+
+const app = express();
+
 const MoviesDB = require("./modules/moviesDB.js");
 const db = new MoviesDB();
-const HTTP_PORT = process.env.PORT || 8080;
+
+require("dotenv").config();
+
 app.use(cors());
+
 app.use(express.json());
+
+const HTTP_PORT = process.env.PORT || 8080;
+
+
 app.get("/", function (req, res) {
-  res.json({ message: "API is Listening" });
+  res.json({ message: "API Listening" });
 });
-app.post("/api/movies", async (req, res) => {
-    try {
-    await db.addMovie(req.body);
-    res.status(200).json("New Movie is added");
-    } catch (err) {
-    res.status(400).json({ message: "err" });
-    }
-    });
+
+
+
+app.post('/api/movies', (req, res) => {
+    const body = req.body;
+    db.addNewMovie(body) .then((data) => {
+            res.status(200).json(data);
+        })
+        .catch((err) => {
+            res.status(500).json({ error: err });
+        })
+});
     
-    app.get("/api/movies", async (req, res) => {
-    try {
-    const data = await db.getAllMovies(req.query.page, req.query.perPage, req.query.title);
-    res.status(200).json(data);
-    } catch (err) {
-    res.status(400).json({ message: "err" });
-    }
+
+app.get("/api/movies", (req, res)=> {
+    db.getAllMovies(req.query.page, req.query.perPage, req.query.title)
+    .then((movies) => {
+        res.status(200).json(movies);
+    })
+    .catch((err) => {
+        res.status(500).json(err);
     });
+});
+
+
+
+app.get("/api/movies/:id", (req, res)=> {
+    db.getMovieById(req.params.id)
+    .then((movies) => {
+        res.status(200).json(movies);
+    })
+    .catch((err) => {
+        res.status(500).json(err);
+    });
+});
     
-    app.get("/api/movies/:id", async (req, res) => {
-    try {
-    const data = await db.getMovieById(req.params.id);
-    res.status(200).json(data);
-    } catch (err) {
-    res.status(400).json({ message: "err" });
-    }
+app.put("/api/movies/:id", (req, res)=> {
+    db.updateMovieById(req.body, req.params.id)
+    .then((data) => {
+        res.status(200).json(data);
+    })
+    .catch((err) => {
+        res.status(500).json(err);  
     });
-    
-    app.put("/api/movies/:id", async (req, res) => {
-    try {
-    await db.updateMovieById(req.body, req.body._id);
-    res.status(200).json("Movie is updated");
-    } catch (err) {
-    res.status(400).json({ message: "err"});
-    }
+});
+
+
+app.delete("/api/movies/:id", (req, res)=> {
+    db.deleteMovieById(req.params.id)
+    .then(() => {
+        res.status(200).json('Movie deleted');      
+    })
+    .catch((err) => {
+        res.status(500).json(err);
     });
-    
-    app.delete("/api/movies/:id", async (req, res) => {
-    try {
-    await db.deleteMovieById(req.params.id);
-    res.status(200).json("Movie is deleted");
-    } catch (err) {
-    res.status(400).json({ message: "err" });
-    }
-    });
+});
+
+
 
 db.initialize(process.env.MONGODB_CONN_STRING)
   .then(() => {
     app.listen(HTTP_PORT, () => {
       console.log(`server listening on: ${HTTP_PORT}`);
     });
-  })
-  .catch((err) => {
-    console.log(err);
+  }).catch((err) => { console.log(err);
   });
+
+
+
+  
