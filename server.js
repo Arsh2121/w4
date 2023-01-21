@@ -4,13 +4,14 @@
 *  No part of this assignment has been copied manually or electronically from any other source
 *  (including web sites) or distributed to other students.
 * 
-*  Name: Dhivi Narahari
-   ID: 156429219
-   Date: 1/20/2023
-*  cyclic:
+*  Name: Dhivi Narhari
+  ID: 156429
+
+*
 ****************************/
 
 const express = require("express");
+
 const cors = require("cors");
 
 const app = express();
@@ -25,23 +26,11 @@ app.use(cors());
 app.use(express.json());
 
 const HTTP_PORT = process.env.PORT || 8080;
-app.listen(process.env.PORT||3000)
-
-
-db.initialize(process.env.MONGODB_CONN_STRING)
-  .then(() => {
-    app.listen(HTTP_PORT, () => {
-      console.log(`server listening on: ${HTTP_PORT}`);
-    });
-  }).catch((err) => { console.log(err);
-  });
 
 
 app.get("/", function (req, res) {
   res.json({ message: "API Listening" });
 });
-
-
 
 
 
@@ -100,3 +89,11 @@ app.delete("/api/movies/:id", (req, res)=> {
 });
 
 
+
+db.initialize(process.env.MONGODB_CONN_STRING)
+  .then(() => {
+    app.listen(HTTP_PORT, () => {
+      console.log(`server listening on: ${HTTP_PORT}`);
+    });
+  }).catch((err) => { console.log(err);
+  });
